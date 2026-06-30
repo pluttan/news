@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    restart: unless-stopped
+    command: ["python3.12", "-m", "backend.main"]
+    env_file:
+      - .env
+    environment:
+      API_HOST: "0.0.0.0"
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "127.0.0.1:8100:8000"
+
+  bot:
+    build: .
+    restart: unless-stopped
+    command: ["python3.12", "-m", "bot.main"]
+    depends_on:
+      - backend
+    env_file:
+      - .env
+    environment:
+      API_BASE_URL: http://backend:8000
+    volumes:
+      - ./data:/app/data
