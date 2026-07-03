@@ -1,16 +1,9 @@
-![Header](header.png)
-
 <div align="center">
 
 # news
 
 **Автоматизированные новостные Telegram-каналы для российских городов**
 
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-2C2C2C?style=for-the-badge&logo=python&labelColor=1E1E1E)]()
-[![FastAPI](https://img.shields.io/badge/fastapi-backend-2C2C2C?style=for-the-badge&logo=fastapi&labelColor=1E1E1E)]()
-[![Telegram](https://img.shields.io/badge/telegram-bot-2C2C2C?style=for-the-badge&logo=telegram&labelColor=1E1E1E)]()
-[![Docker](https://img.shields.io/badge/docker-deploy-2C2C2C?style=for-the-badge&logo=docker&labelColor=1E1E1E)]()
 
 </div>
 
@@ -44,12 +37,13 @@
 
 </div>
 
-## ■ Архитектура
+## ■ Как это работает
 
 ```
-Telegram Admin <-> Bot (aiogram) -> HTTP -> Backend (FastAPI) -> SQLite
-                                                 ^
-                   Scout (VK/TG search) ---------+
+1. Модуль-разведчик запрашивает VK API и Telegram (через Telethon) для поиска локальных групп и каналов по городу, присваивая каждому оценку релевантности от 0 до 100.
+2. Найденные источники регистрируются в FastAPI-бэкенде через HTTP и сохраняются в SQLite.
+3. Административный Telegram-бот (aiogram) позволяет операторам добавлять города, просматривать источники и управлять статусом каналов — все запросы проходят через REST API.
+4. Docker Compose объединяет сервисы бэкенда и бота для развёртывания.
 ```
 
 ## ■ Скриншоты
@@ -62,7 +56,7 @@ Telegram Admin <-> Bot (aiogram) -> HTTP -> Backend (FastAPI) -> SQLite
 
 </div>
 
-## ■ Запуск
+## ■ Использование
 
 ```bash
 make install          # venv + зависимости
