@@ -1,16 +1,9 @@
-![Header](header.png)
-
 <div align="center">
 
 # news
 
 **Automated news Telegram channels for Russian cities**
 
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-2C2C2C?style=for-the-badge&logo=python&labelColor=1E1E1E)]()
-[![FastAPI](https://img.shields.io/badge/fastapi-backend-2C2C2C?style=for-the-badge&logo=fastapi&labelColor=1E1E1E)]()
-[![Telegram](https://img.shields.io/badge/telegram-bot-2C2C2C?style=for-the-badge&logo=telegram&labelColor=1E1E1E)]()
-[![Docker](https://img.shields.io/badge/docker-deploy-2C2C2C?style=for-the-badge&logo=docker&labelColor=1E1E1E)]()
 
 </div>
 
@@ -29,6 +22,8 @@ A system for creating and managing automated news Telegram channels for Russian 
 
 ## ■ Stack
 
+<div align="center">
+
 | Component | Technology |
 |-----------|------------|
 | Backend | FastAPI + uvicorn |
@@ -40,13 +35,26 @@ A system for creating and managing automated news Telegram channels for Russian 
 | Config | python-dotenv |
 | Deploy | Docker Compose |
 
-## ■ Architecture
+</div>
+
+## ■ How It Works
 
 ```
-Telegram Admin <-> Bot (aiogram) -> HTTP -> Backend (FastAPI) -> SQLite
-                                                 ^
-                   Scout (VK/TG search) ---------+
+1. Scout module queries VK API and Telegram (via Telethon) for local groups and channels per city, assigning each a 0-100 relevance score.
+2. Discovered sources are registered in the FastAPI backend via HTTP and persisted in SQLite.
+3. The admin Telegram bot (aiogram) lets operators add cities, review sources, and manage channel status — all requests go through the REST API.
+4. Docker Compose bundles the backend and bot services for deployment.
 ```
+
+## ■ Screenshots
+
+<div align="center">
+
+![Screenshot](screenshots/main.png)
+
+*Main admin bot interface showing city and source management*
+
+</div>
 
 ## ■ Usage
 
@@ -65,10 +73,6 @@ make clean            # remove venv + database
 docker compose build backend bot
 docker compose up -d
 ```
-
-## ■ Screenshots
-
-![Screenshot](screenshots/main.png)
 
 ## ■ License
 
